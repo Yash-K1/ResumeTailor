@@ -95,12 +95,19 @@ if st.button("Rewrite Resume"):
         st.error("Please upload a PDF resume and enter a JD.")
     else:
         with st.spinner("Running agent..."):
-            jd_skills = extract_skills_from_text(jd_text)
-            st.markdown("**Detected JD skills / keywords:**")
-            st.write(jd_skills)
+            jd_skills = extract_skills_from_text(jd_text).split(", ")
+
+            # Display extracted JD skills in a collapsible dropdown
+            if jd_skills:
+                with st.expander("Detected JD skills / keywords", expanded=False):
+                    for skill in jd_skills:
+                        if skill.strip():
+                            st.markdown(f"- {skill.strip()}")
 
             try:
-                st.session_state.rewritten_resume = agent_rewrite(st.session_state.resume_text, jd_text)
+                st.session_state.rewritten_resume = agent_rewrite(
+                    st.session_state.resume_text, jd_text
+                )
             except Exception as e:
                 st.error(f"Agent error: {e}")
                 st.session_state.rewritten_resume = None
