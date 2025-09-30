@@ -14,7 +14,7 @@ def extract_text_from_pdf(uploaded_file) -> str:
     return text
 
 # ---- Core LLM setup ----
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.0)
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.0)
 
 def rewrite_resume_for_jd(resume_text: str, jd_text: str, instructions: str = None) -> str:
     system_prompt = (
